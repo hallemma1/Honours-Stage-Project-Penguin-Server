@@ -1,0 +1,38 @@
+name: Deploy
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+env:
+  AZURE_WEBAPP_NAME: PENGUINSERVER
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish_output"
+
+jobs:
+  publish:
+    runs-on: ubuntu_latest
+
+    steps:
+      - uses: action/checkout@v3
+
+      - name: Setup My Penguins Pls
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Restore My Penguins Pls
+        run: dotnet restore ./PenguinServer/PenguinServer.csproj
+
+      - name: Build My Penguins Pls
+        run: dotnet build ./PenguinServer/PenguinServer.csproj --configuration Release --no-restore
+
+      - name: Publish My Penguins Pls
+        run: dotnet publish ./PenguinServer/PenguinServer.csproj --configuration Release --no-build --output '${{env.AZURE_WEBAPP_PACKAGE_PATH}}'
+
+      - name: Deploy My Penguins Pls
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.ACTUAL_AZURE_PUBLISH_PROFILE }}
+          package: '${{env.AZURE_WEBAPP_PACKAGE_PATH}}'
