@@ -1,4 +1,4 @@
-name: Deploy
+name: Publish 🚀
 
 on:
   workflow_dispatch:
@@ -15,11 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: action/checkout@v3
-        with:
-          ref: 'main'
+      - uses: actions/checkout@v3
 
-      - name: Setup My Penguins Pls.
+      - name: Setup My Penguins Pls
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '6.0.x'
