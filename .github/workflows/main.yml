@@ -31,6 +31,9 @@ jobs:
       - name: Publish My Penguins Pls
         run: dotnet publish ./PenguinServer/PenguinServer.csproj --configuration Release --no-build --output '${{env.AZURE_WEBAPP_PACKAGE_PATH}}'
 
+      - name: Copy CSV Files
+        run: cp PenguinServer/*.csv ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+  
       - name: Deploy My Penguins Pls
         uses: azure/webapps-deploy@v2
         with:
