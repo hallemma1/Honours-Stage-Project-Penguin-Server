@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: action/checkout@v1
+      - uses: action/checkout@v3
 
       - name: Setup My Penguins Pls.
         uses: actions/setup-dotnet@v3
