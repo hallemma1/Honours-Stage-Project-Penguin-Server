@@ -16,6 +16,8 @@ jobs:
 
     steps:
       - uses: action/checkout@v3
+        with:
+          ref: 'main'
 
       - name: Setup My Penguins Pls.
         uses: actions/setup-dotnet@v3
